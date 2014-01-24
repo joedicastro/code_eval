@@ -1,0 +1,36 @@
+#!/usr/bin/env python2
+# encoding: utf-8
+
+"""
+First Non-Repeated Character.
+
+Challenge Description:
+
+Write a program to find the first non repeated character in a string.
+
+Input sample:
+
+The first argument will be a path to a filename containing strings. E.g.
+
+yellow
+tooth
+
+Output sample:
+
+Print to stdout, the first non repeating character, one per line. E.g.
+
+y
+h
+
+"""
+
+import collections
+import sys
+
+with open(sys.argv[1], 'r') as input:
+    test_cases = input.read().strip().splitlines()
+
+for test in test_cases:
+    count = collections.Counter(test)
+    print test[min(test.index(i) for i in
+                   (j for j in count.keys() if count[j] == 1))]
