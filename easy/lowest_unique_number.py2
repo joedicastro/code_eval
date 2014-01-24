@@ -1,0 +1,40 @@
+#!/usr/bin/env python2
+# encoding: utf-8
+
+"""
+Lowest Unique Number.
+
+Challenge Description:
+
+An Armstrong number is an n-digit number that is equal to the sum of the n'th
+powers of its digits. Determine if the input numbers are Armstrong numbers.
+
+Input sample:
+
+Your program should accept as its first argument a path to a filename. Each
+line in this file has a positive integer. E.g.
+
+6
+153
+351
+
+Output sample:
+
+Print out True/False if the number is an Armstrong number or not. E.g.
+
+True
+True
+False
+
+"""
+
+import sys
+import collections
+
+with open(sys.argv[1], 'r') as input:
+    test_cases = input.read().strip().splitlines()
+
+for test in test_cases:
+    count = collections.Counter(test.split())
+    uniques = [i for i in count.keys() if count[i] == 1]
+    print test.split().index(min(uniques)) + 1 if uniques else 0
