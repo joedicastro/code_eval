@@ -1,0 +1,42 @@
+#!/usr/bin/env python2
+# encoding: utf-8
+
+"""
+Calculate Distance.
+
+Challenge Description:
+
+You have coordinates of 2 points and need to find the distance between them.
+
+Input sample:
+
+Your program should accept as its first argument a path to a filename. Input
+example is the following
+
+(25, 4) (1, -6)
+(47, 43) (-25, -11)
+
+All numbers in input are integers between -100 and 100.
+
+Output sample:
+
+Print results in the following way.
+
+26
+90
+
+You don't need to round the results you receive.
+They must be integer numbers between -100 and 100.
+
+"""
+
+import sys
+import math
+
+with open(sys.argv[1], 'r') as input:
+    test_cases = input.read().strip().splitlines()
+
+for test in test_cases:
+    nums = [int(i) for i in
+            test.replace(',', '').replace('(', '').replace(')', '').split()]
+    print int(math.sqrt((nums[0] - nums[2]) ** 2 + (nums[1] - nums[3]) ** 2))
