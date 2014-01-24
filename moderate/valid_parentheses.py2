@@ -1,0 +1,44 @@
+#!/usr/bin/env python2
+# encoding: utf-8
+
+"""
+Valid Parentheses.
+
+Challenge Description:
+
+Given a string comprising just of the characters (,),{,},[,] determine if it is
+well-formed or not.
+
+Input sample:
+
+Your program should accept as its first argument a path to a filename. Each
+line in this file contains a string comprising of the characters mentioned
+above. E.g.
+
+()
+([)]
+
+Output sample:
+
+Print out True or False if the string is well-formed. E.g.
+
+True
+False
+
+"""
+
+import re
+import sys
+
+with open(sys.argv[1], 'r') as input:
+    test_cases = input.read().strip().splitlines()
+
+for test in test_cases:
+    pairs = ('{}', '()', '[]')
+    pairs_regex = re.compile('\(\)|\[\]|\{\}')
+    while True:
+        for pair in pairs:
+            test = test.replace(pair, '')
+        if not len(re.findall(pairs_regex, test)):
+            break
+    print True if not test else False
