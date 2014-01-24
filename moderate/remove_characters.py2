@@ -1,0 +1,41 @@
+#!/usr/bin/env python2
+# encoding: utf-8
+
+"""
+Remove Characters.
+
+Challenge Description:
+
+Write a program to remove specific characters from a string.
+
+Input sample:
+
+The first argument will be a path to a filename containing an input string
+followed by a comma and then the characters that need to be scrubbed. E.g.
+
+how are you, abc
+hello world, def
+
+Output sample:
+
+Print to stdout, the scrubbed strings, one per line. Trim out any
+leading/trailing whitespaces if they occur. E.g.
+
+how re you
+hllo worl
+
+"""
+
+import sys
+import collections
+
+with open(sys.argv[1], 'r') as input:
+    test_cases = input.read().strip().splitlines()
+
+for test in test_cases:
+    text, chars = test.split(',')
+    text = text.split()
+    for c in chars:
+        for t in text:
+            text[text.index(t)] = t.replace(c, '')
+    print ' '.join(text)
