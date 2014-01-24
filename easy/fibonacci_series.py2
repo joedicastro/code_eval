@@ -1,0 +1,43 @@
+#!/usr/bin/env python2
+# encoding: utf-8
+
+"""
+Fibonacci Series.
+
+Challenge Description:
+
+The Fibonacci series is defined as: F(0) = 0; F(1) = 1; F(n) = F(n-1) + F(n-2)
+when n>1. Given a positive integer 'n', print out the F(n).
+
+Input sample:
+
+The first argument will be a path to a filename containing a positive integer,
+one per line. E.g.
+
+5
+12
+
+Output sample:
+
+Print to stdout, the fibonacci number, F(n). E.g.
+
+5
+144
+
+"""
+
+import sys
+
+with open(sys.argv[1], 'r') as input:
+    test_cases = input.read().strip().splitlines()
+
+fibonacci = [0, 1, 1]
+
+for test in test_cases:
+    if test:
+        num = int(test)
+        if num >= len(fibonacci):
+            while len(fibonacci) <= num:
+                next = fibonacci[-1] + fibonacci[-2]
+                fibonacci.append(next)
+        print fibonacci[num]
