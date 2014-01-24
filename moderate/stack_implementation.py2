@@ -1,0 +1,37 @@
+#!/usr/bin/env python2
+# encoding: utf-8
+
+"""
+Stack Implementation.
+
+Challenge Description:
+
+Write a program implementing a stack inteface for integers.The interface should
+have 'push' and 'pop' functions. You will be asked to 'push' a series of
+integers and then 'pop' and print out every alternate integer.
+
+Input sample:
+
+Your program should accept as its first argument a path to a filename
+containing a series of space delimited integers, one per line. E.g.
+
+1 2 3 4
+10 -2 3 4
+
+Output sample:
+
+Print to stdout, every alternate integer(space delimited), one per line. E.g.
+
+4 2
+4 -2
+
+"""
+
+import sys
+
+with open(sys.argv[1], 'r') as input:
+    test_cases = input.read().strip().splitlines()
+
+for test in test_cases:
+    stack = [int(i) for i in test.split()]
+    print ' '.join(str(i) for i in stack[-1::-2])
