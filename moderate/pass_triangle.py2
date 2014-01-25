@@ -1,0 +1,54 @@
+#!/usr/bin/env python2
+# encoding: utf-8
+
+"""
+Pass Triangle.
+
+Challenge Description:
+
+By starting at the top of the triangle and moving to adjacent numbers on the
+row below, the maximum total from top to bottom is 27.
+
+   5
+  9 6
+ 4 6 8
+0 7 1 5
+
+5 + 9 + 6 + 7 = 27
+
+Input sample:
+
+Your program should accept as its first argument a path to a filename. Input
+example is the following
+
+5
+9 6
+4 6 8
+0 7 1 5
+
+You make also check full input file which will be used for your code
+evaluation.
+
+Output sample:
+
+The correct output is the maximum sum for the triangle. So for the given
+example the correct answer would be
+
+27
+
+"""
+
+import sys
+
+with open(sys.argv[1], 'r') as input:
+    test_cases = input.read().strip().splitlines()
+
+triangle = [[int(n) for n in l.split()] for l in test_cases if l]
+
+for row in xrange(len(triangle) - 1, -1, -1):
+    for number in xrange(len(triangle[row]) - 1):
+        chosen = max(triangle[row][number] + triangle[row - 1][number],
+                     triangle[row][number + 1] + triangle[row - 1][number])
+        triangle[row - 1][number] = chosen
+
+print triangle[0][0]
