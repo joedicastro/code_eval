@@ -52,89 +52,90 @@ Times computed in a Intel Core i7-3770 CPU @ 3.40GHz processor.
 
 Solved 43 challenges
 
-     Armstrong Numbers                           0.03985 s        4.316 MiB
-     Beautiful Strings                           0.03539 s        4.730 MiB
-     Bit Positions                               0.03236 s        4.316 MiB
-     Calculate Distance                          0.02186 s        4.387 MiB
-     Capitalize Words                            0.01688 s        4.316 MiB
-     Compressed Sequence                         0.01840 s        4.320 MiB
-     Even Numbers                                0.02770 s        4.309 MiB
-     Fibonacci Series                            0.03109 s        4.324 MiB
-     File Size                                   0.00869 s        4.305 MiB
-     Find A Writer                               0.00907 s        4.320 MiB
-     Fizz Buzz                                   0.05651 s        4.328 MiB
-     Happy Numbers                               0.01514 s        4.316 MiB
-     Hex To Decimal                              0.02290 s        4.309 MiB
-     Hidden Digits                               0.03543 s        4.344 MiB
-     Json Menu Ids                               0.04300 s        4.320 MiB
-     Longest Word                                0.01293 s        4.309 MiB
-     Lowercase                                   0.03388 s        4.297 MiB
-     Lowest Unique Number                        0.01045 s        4.605 MiB
-     Mixed Content                               0.03203 s        4.316 MiB
-     Morse Code                                  0.02046 s        4.391 MiB
-     Multiples Of A Number                       0.02172 s        4.332 MiB
-     Multiplication Tables                       0.01868 s        4.316 MiB
-     Multiply Lists                              0.03368 s        4.316 MiB
-     N Mod M                                     0.03868 s        4.316 MiB
-     Odd Numbers                                 0.00865 s        4.305 MiB
-     Penultimate Word                            0.03503 s        4.297 MiB
-     Prime Palindrome                            0.00867 s        4.379 MiB
-     Query Board                                 0.02163 s        4.883 MiB
-     Reverse Words                               0.02782 s        4.305 MiB
-     Rightmost Char                              0.02540 s        4.312 MiB
-     Road Trip                                   0.03142 s        4.336 MiB
-     Roman Numerals                              0.02705 s        4.352 MiB
-     Self Describing Numbers                     0.02829 s        4.617 MiB
-     Set Intersection                            0.01253 s        4.312 MiB
-     Shortest Repetition                         0.03740 s        4.320 MiB
-     Simple Sorting                              0.01581 s        4.340 MiB
-     Sum Of Digits                               0.02670 s        4.312 MiB
-     Sum Of Integers From File                   0.03387 s        4.309 MiB
-     Sum Of Primes                               0.01185 s        4.453 MiB
-     Swap Case                                   0.04039 s        4.312 MiB
-     Swap Elements                               0.01679 s        4.328 MiB
-     Unique Elements                             0.02834 s        4.316 MiB
-     Word To Digit                               0.03355 s        4.324 MiB
+     Armstrong Numbers                           0.00856 s        4.320 MiB
+     Beautiful Strings                           0.01083 s        4.727 MiB
+     Bit Positions                               0.00863 s        4.312 MiB
+     Calculate Distance                          0.00868 s        4.383 MiB
+     Capitalize Words                            0.00865 s        4.316 MiB
+     Compressed Sequence                         0.00868 s        4.324 MiB
+     Even Numbers                                0.00847 s        4.312 MiB
+     Fibonacci Series                            0.00866 s        4.324 MiB
+     File Size                                   0.00841 s        4.305 MiB
+     Find A Writer                               0.00866 s        4.320 MiB
+     Fizz Buzz                                   0.02978 s        4.324 MiB
+     Happy Numbers                               0.00871 s        4.316 MiB
+     Hex To Decimal                              0.00847 s        4.309 MiB
+     Hidden Digits                               0.00873 s        4.344 MiB
+     Json Menu Ids                               0.00884 s        4.309 MiB
+     Longest Word                                0.00866 s        4.312 MiB
+     Lowercase                                   0.00851 s        4.293 MiB
+     Lowest Unique Number                        0.00948 s        4.609 MiB
+     Mixed Content                               0.00876 s        4.309 MiB
+     Morse Code                                  0.00867 s        4.391 MiB
+     Multiples Of A Number                       0.00866 s        4.309 MiB
+     Multiplication Tables                       0.00863 s        4.312 MiB
+     Multiply Lists                              0.00860 s        4.316 MiB
+     N Mod M                                     0.00890 s        4.316 MiB
+     Odd Numbers                                 0.00854 s        4.301 MiB
+     Penultimate Word                            0.00848 s        4.297 MiB
+     Prime Palindrome                            0.00875 s        4.328 MiB
+     Query Board                                 0.01250 s        4.891 MiB
+     Reverse Words                               0.00854 s        4.305 MiB
+     Rightmost Char                              0.00997 s        4.312 MiB
+     Road Trip                                   0.00863 s        4.336 MiB
+     Roman Numerals                              0.00881 s        4.355 MiB
+     Self Describing Numbers                     0.00956 s        4.617 MiB
+     Set Intersection                            0.00853 s        4.309 MiB
+     Shortest Repetition                         0.00869 s        4.320 MiB
+     Simple Sorting                              0.00873 s        4.340 MiB
+     Sum Of Digits                               0.00868 s        4.316 MiB
+     Sum Of Integers From File                   0.00861 s        4.312 MiB
+     Sum Of Primes                               0.01182 s        4.445 MiB
+     Swap Case                                   0.00858 s        4.312 MiB
+     Swap Elements                               0.00880 s        4.332 MiB
+     Unique Elements                             0.00885 s        4.316 MiB
+     Word To Digit                               0.00903 s        4.324 MiB
 
 ### Moderate
 
-Solved 27 challenges
+Solved 28 challenges
 
-     Array Absurdity                             0.00956 s        4.613 MiB
-     Cash Register                               0.00873 s        4.398 MiB
-     Counting Primes                             0.08663 s        6.883 MiB
-     Decimal To Binary                           0.00839 s        4.297 MiB
-     Detecting Cycles                            0.00870 s        4.359 MiB
-     Email Validation                            0.02909 s        4.312 MiB
-     Endianness                                  0.00860 s        4.297 MiB
-     Find A Square                               0.01965 s        4.430 MiB
-     First Non Repeated Character                0.02224 s        4.617 MiB
-     Longest Lines                               0.02394 s        4.320 MiB
-     Minimun Coins                               0.02103 s        4.324 MiB
-     Mth To Last Element                         0.01266 s        4.309 MiB
-     Number Of Ones                              0.00958 s        4.605 MiB
-     Number Pairs                                0.01691 s        4.398 MiB
-     Overlapping Rectangles                      0.02633 s        4.336 MiB
-     Pangrams                                    0.02319 s        4.395 MiB
-     Pass Triangle                               0.03073 s        4.340 MiB
-     Point In Circle                             0.01693 s        4.426 MiB
-     Remove Characters                           0.00942 s        4.605 MiB
-     Reverse And Add                             0.02927 s        4.328 MiB
-     Stack Implementation                        0.02263 s        4.324 MiB
-     String Rotation                             0.02548 s        4.609 MiB
-     Sudoku                                      0.01890 s        4.348 MiB
-     Sum Of Integers                             0.02936 s        4.332 MiB
-     Sum To Zero                                 0.01973 s        4.379 MiB
-     Trailing String                             0.01967 s        4.316 MiB
-     Valid Parentheses                           0.01919 s        4.320 MiB
+     Array Absurdity                             0.00959 s        4.617 MiB
+     Cash Register                               0.00882 s        4.395 MiB
+     Counting Primes                             0.08616 s        6.883 MiB
+     Decimal To Binary                           0.00853 s        4.301 MiB
+     Detecting Cycles                            0.00878 s        4.363 MiB
+     Email Validation                            0.00939 s        4.316 MiB
+     Endianness                                  0.00855 s        4.293 MiB
+     Find A Square                               0.00900 s        4.406 MiB
+     First Non Repeated Character                0.00962 s        4.617 MiB
+     Flavius Josephus                            0.00869 s        4.344 MiB
+     Longest Lines                               0.00865 s        4.320 MiB
+     Minimun Coins                               0.00860 s        4.324 MiB
+     Mth To Last Element                         0.00868 s        4.305 MiB
+     Number Of Ones                              0.00960 s        4.609 MiB
+     Number Pairs                                0.00887 s        4.395 MiB
+     Overlapping Rectangles                      0.00873 s        4.332 MiB
+     Pangrams                                    0.00958 s        4.395 MiB
+     Pass Triangle                               0.01272 s        4.344 MiB
+     Point In Circle                             0.01003 s        4.375 MiB
+     Remove Characters                           0.00949 s        4.609 MiB
+     Reverse And Add                             0.00861 s        4.328 MiB
+     Stack Implementation                        0.00855 s        4.312 MiB
+     String Rotation                             0.00957 s        4.609 MiB
+     Sudoku                                      0.00878 s        4.348 MiB
+     Sum Of Integers                             0.00876 s        4.332 MiB
+     Sum To Zero                                 0.00883 s        4.383 MiB
+     Trailing String                             0.00861 s        4.316 MiB
+     Valid Parentheses                           0.00879 s        4.324 MiB
 
 ### Moderate
 
 Solved 5 challenges
 
-     Closest Pair                                0.04870 s        4.410 MiB
-     Following Integer                           0.03104 s        4.379 MiB
-     Poker Hands                                 0.03039 s        4.852 MiB
-     String List                                 0.04262 s        4.387 MiB
-     String Permutations                         0.07066 s        4.375 MiB
+     Closest Pair                                0.00895 s        4.410 MiB
+     Following Integer                           0.00893 s        4.379 MiB
+     Poker Hands                                 0.01607 s        4.852 MiB
+     String List                                 0.00873 s        4.387 MiB
+     String Permutations                         0.00897 s        4.363 MiB
 
