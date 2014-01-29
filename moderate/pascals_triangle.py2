@@ -1,0 +1,54 @@
+#!/usr/bin/env python2
+# encoding: utf-8
+
+"""
+Pascals Triangle.
+
+Challenge Description:
+
+A Pascals triangle row is constructed by looking at the previous row and adding
+the numbers to its left and right to arrive at the new value. If either the
+number to its left/right is not present, substitute a zero in it's place. More
+details can be found here: Pascal's triangle. E.g. a Pascal's triangle upto a
+depth of 6 can be shown as:
+
+            1
+          1   1
+        1   2   1
+       1  3   3   1
+     1  4   6   4   1
+    1  5  10  10  5   1
+
+Input sample:
+
+Your program should accept as its first argument a path to a filename. Each
+line in this file contains a positive integer which indicates the depth of the
+triangle (1 based). E.g.
+
+6
+
+Output sample:
+
+Print out the resulting pascal triangle upto the requested depth in row major
+form. E.g.
+
+1 1 1 1 2 1 1 3 3 1 1 4 6 4 1 1 5 10 10 5 1
+
+"""
+
+import sys
+
+with open(sys.argv[1], 'r') as input:
+    test_cases = input.read().strip().splitlines()
+
+for test in test_cases:
+    depth = int(test)
+
+    triangle = [[1]]
+    for i in xrange(2, depth + 1):
+        prev= triangle[-1]
+        middle = [prev[i] + prev[i - 1] for i in xrange(1, len(prev))]
+        step = [1] + (middle if depth > 2 else []) + [1]
+        triangle.append(step)
+
+    print ' '.join(str(i) for i in sum(triangle, [])) if depth else ''
