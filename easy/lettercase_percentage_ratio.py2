@@ -1,0 +1,46 @@
+#!/usr/bin/env python2
+# encoding: utf-8
+
+"""
+
+Lettercase Percentage Ratio
+
+Challenge Description:
+
+Your goal is to find the percentage ratio of lowercase and uppercase
+letters in line below.
+
+Input sample:
+
+Your program should accept as its first argument a path to a
+filename. Each line of input contains a string with uppercase and
+lowercase letters E.g.:
+
+thisTHIS
+AAbbCCDDEE
+N
+UkJ
+
+Output sample:
+
+For each line from input, print the percentage ratio of uppercase and
+lowercase letters rounded to the second digit after the dot. E.g.:
+
+lowercase: 50.00 uppercase: 50.00
+lowercase: 20.00 uppercase: 80.00
+lowercase: 0.00 uppercase: 100.00
+lowercase: 33.33 uppercase: 66.67
+
+"""
+
+import sys
+from string import ascii_lowercase, ascii_uppercase
+
+with open(sys.argv[1], 'r') as input:
+    test_cases = input.read().strip().splitlines()
+
+for test in test_cases:
+    length = len(test)
+    lower = (sum(1 for l in test if l in ascii_lowercase) * 100.0) / length
+    upper = (sum(1 for l in test if l in ascii_uppercase) * 100.0) / length
+    print "lowercase: {0:.2f} uppercase: {1:.2f}".format(lower, upper)
