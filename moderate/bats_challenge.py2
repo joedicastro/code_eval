@@ -1,0 +1,83 @@
+#!/usr/bin/env python2
+# encoding: utf-8
+
+"""
+Bats Challenge.
+
+Challenge Description:
+
+Outside of your window, there's a wire between two buildings. Bats
+love to hang there but you notice they never hang closer than "d"
+centimeters from each other. They also don't hang closer than 6
+centimeters from any of the buildings.
+
+Your goal is to determine the maximum number of additional bats that
+can fit on that wire assuming they have zero width.
+
+Input sample:
+
+
+Your program should accept as its first argument a path to a filename.
+
+Each line of input contains three space separated integers: the length
+of the wire "l", distance "d" and number of bats "n" already hanging
+on the wire.
+
+"n" numbers contain the positions of the bats in any order. All number
+are integers. You can assume that the bats already hanging on the wire
+are at least 6 cm from the poles and at least "d" centimeters apart
+from each other.:
+
+22 2 2 9 11
+33 5 0
+16 3 2 6 10
+835 125 1 113
+47 5 0
+
+Output sample:
+
+3
+5
+0
+5
+8
+
+For each line of input print out one integer to determine the maximum
+number of additional bats that can possibly hang on he wire. E.g:
+
+"""
+
+import sys
+
+with open(sys.argv[1], 'r') as input:
+    test_cases = input.read().strip().splitlines()
+
+for test in test_cases:
+    vals = [int(i) for i in test.split()]
+    length, distance, bats, positions = vals[0], vals[1], vals[2], vals[3:]
+    padding, max_additional_bats = 6, 0
+    # pole's extremes - building margin
+    left, right = padding, length - padding
+    segments = sorted(positions)
+
+    # let's put a bird in each extreme if possible
+    if not bats:
+        segments += [left, right]
+        max_additional_bats += 2
+    else: 
+        # left extreme
+        if left not in segments and segments[0] - left > distance:
+            segments.insert(0, padding)
+            max_additional_bats += 1
+        # right extreme
+        if right not in segments and right - segments[-1] > distance:
+            segments.append(length - padding)
+            max_additional_bats += 1
+
+    # let's see if is there more room for additional birds
+    for i in xrange(len(segments) - 1):
+        gaps = ((segments[i + 1] - segments[i]) / distance) - 1
+        if gaps > 0:
+            max_additional_bats += gaps
+
+    print max_additional_bats
