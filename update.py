@@ -182,7 +182,7 @@ def write_readme(challenges):
     
     {4}
     
-    ### Moderate
+    ### Hard
     
     Solved {5} challenges
     
