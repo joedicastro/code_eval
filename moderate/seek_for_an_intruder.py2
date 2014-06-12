@@ -1,0 +1,155 @@
+#!/usr/bin/env python2
+# encoding: utf-8
+
+"""
+Seek for an Intruder.
+
+Challenge Description:
+
+A company's server has been down for a couple of hours due to an unauthorized
+intrusion. After bringing it back live, a security department started to
+investigate the log files in order to find any trails of a hacker. The luck was
+on their side so they've found a broken network log file full of fragmentary
+information, but with some useful data which could possibly help them to
+identify an intruder. Among the garbage of ASCII upper and lower case letters,
+punctuation and digits they found IP addresses in a various formats. E.g.
+
+Dotted decimal	192.0.2.235 with no leading zero.
+Dotted hexadecimal 0xc0.0x0.0x02.0xeb Each octet is individually converted to
+hexadecimal form.
+Dotted octal 0300.0000.0002.0353 Each octet is individually converted into octal.
+Dotted binary 11000000.00000000.00000010.11101011 Each octet is individually
+converted into binary.
+Binary 11000000000000000000001011101011
+Octal 030000001353
+Hexadecimal	0xC00002EB	Concatenation of the octets from the dotted hexadecimal.
+Decimal	3221226219	The 32-bit number expressed in decimal.
+
+To help them finish an investigation and, who knows, find the hacker, you need
+to find the most occurring IP address in that file. You must search only for
+valid IPv4 address in a range from 1.0.0.0 to 255.255.255.254. The input sample
+below contains:
+
+Valid IP addresses:
+    1000000111011100010000001100101
+    01000000.11101110.00100000.01100101
+    034062405073
+    023244514100
+    033642264316
+    222.137.104.206
+    10110010011001001101100010111010
+    0131.0345.0202.0341
+    0x59.0xe5.0x82.0xe1
+    89.229.130.225
+    1011001111001011000001011100001
+    89.229.130.225
+
+Not valid IP addresses:
+    1101100000.1001010111.101010101.1110010101
+    864.599.341.917
+    01540.01127.0525.01625
+    0x360.0x257.0x155.0x395
+    864.599.341.917
+    864.599.341.917
+
+The IP address 89.229.130.225 appears five times so it's the one we've been
+searching for.
+
+Input sample:
+
+m*M}Qz`\fz/We}e[`md;Puuat-;UP|Yi64iXh%{Hnul8&onq0p*mY+4x\/{ZTw[gXeJV2&.P*Ywe
+VA,8Z%z-AYzp6o{qeX3Q|\`Zw7{78:Y80qP-,b0BDVvZh60x59.0xe5.0x82.0xe1uptW8eF8C]nKJ9c(AtXa9>Dy}nF'Jr
+Cq2ox2Mmr7PuaPO023244514100.@({-mER/yhWg)wsf"`Fu_tp.C]6$!?(^+wzLBxi,PJ41Hdu`m>Bz=v*^~N|h
+jfZ&y9w'XkrrO6JDoZOyZ864.599.341.917JBJ5u(^i%BjecAd"$4UKtPnbtvx^01540.01127.0525.01625tU$HY/,Uw(/CJP]L+/XohV2hD&]
+9Pl.1011001111001011000001011100001,Y,HNAiSzL;?BU_UQlCvyzRU^"R]{kVJ"[+3%PK`]\"V?;Y'8CjJ<&QGmESP6W7&P,@$tFtL
+`z6DR}/>gLfLX[1&]Vr8"EG-_+wy?sw4beHIp^oTtZzvWBwY{[89.229.130.225R,?B;"?[ix4^9D$fVaJ_V\)N`B
+=ddalCNOM)FnA=/r,?}#idpo1E#eeMq.wyfu/2viz;c_[kHppMh,K|\`Q1_R(`jRNvCZW2Niz7Q#
+w:b21f[rsnj^Rgg[t!(<5v`Iup^&]o@489.229.130.225gw4\SwBEbN222.137.104.206[Jo<)lj36bB.034062405073xx37d;~wKi/D"I'AeVfeBO
+|7$mi3k]f}9N*Vjq5aMy[Xd+3a$n$paB?5p9^01000000.11101110.00100000.01100101u@0:7&J;8FDZt840131.0345.0202.0341`}Z*Xz[8IH?'
+^~H5]JqL#?>d8V5JPP1101100000.1001010111.101010101.11100101011Funfr=3*E\pEa"3YV^?J+;dLA#t)$3Lvi5J?|?qQyV(0k?>KPB:t{IRUm>cuN0^[YSOsixxF"zzl5LALPIaXFM.
+jMfgpfH+w>M8\`r{;`XdEYm0Rc7o>Aqq4k?gP>,O^2I^]OF#zN\cLSUQ(x!(oxA0ld:yYl*K_AK^Hd_cpd`
+OwEK!d?y\M(_L~|=lm1++BLA<&PnOnBAfga>t},x{T$*&/}+wX{j/pm'|N~Cq1000000111011100010000001100101x~[*Scc=lb82`K~
+HydTS#@@864.599.341.917Q&.DVb\ails}C101100100110010011011000101110100&@KyFK"7}u3\63?u][~zz>-r$_OqUbE*uv,\ccCnUmP\`4/Ht!3puL.A\'].BA>reos{U0x360.0x257.0x155.0x395y^UGXh^'`|I.CV}R>a}RAhO%Vw
+uQ#27/z^B8q:x(I|$k9dmF{\P(t!ui5[
+
+Your program should accept as its first argument a path to a filename. The file
+contains the N number of lines with the length of M symbols. E.g.
+
+Output sample:
+
+89.229.130.225
+
+Print out the most occurring IP address in a dotted decimal representation
+without leading zeros. In case there is more than one IP address present
+maximum number of times then print them out in ascending order separated by a
+white space.
+
+Constraints:
+
+M is in range [100, 300]
+N is in range [800, 1200]
+
+"""
+
+import re
+import sys
+from collections import Counter
+
+
+def convert_and_validate(ips, base, dotted=True):
+    validated = []
+    for ip in ips:
+        try:
+            if dotted:
+                octets = [int(i, base) for i in ip.split('.')]
+            else:
+                ip_hex = hex(int(ip, base)).lstrip('0x')
+                if len(ip_hex) == 7:
+                    ip_hex = '0' + ip_hex
+                octets = [int(ip_hex[i:i + 2:], 16) for i in xrange(0, 7, 2)]
+        except ValueError:
+            octets = []
+
+        # validate the ip
+        if all(True for i in octets if i < 255) and octets:
+            validated.append('.'.join(str(i) for i in octets))
+
+    return validated
+
+
+with open(sys.argv[1], 'r') as input:
+    test_cases = input.read().strip().splitlines()
+
+
+found_ips = []
+
+# from 1.0.0.0 to 255.255.255.254
+dot_dec = re.compile(r'((?:\d{1,3}\.){3}\d{1,3})')
+# from 0x1.0x0.0x0.0x0 to 0xFF.0xFF.0xFF.0xFE
+dot_hex = re.compile(r'((?:0x[A-Fa-f0-9]{1,2}\.?){4})')
+# from 0001.0001.0000.0000 to 0377.0377.0377.0376
+dot_oct = re.compile(r'((?:0[0-7]{1,3}\.){3}0[0-7]{1,3})')
+# from 00000001.00000000.00000000.00000000 to 11111111.11111111.11111111.11111110
+dot_bin = re.compile(r'((?:[01]{8}\.){3}[01]{8})')
+# from 1000000000000000000000000 to 11111111111111111111111111111110
+binary = re.compile(r'[01]{25,32}')
+# from 0100000000 to 037777777776
+octal = re.compile(r'\D(0[0-7]{9,11})')
+# from 0x1000000 to 0xfffffffe
+hexadecimal = re.compile(r'0x[A-Fa-f0-9]{7,8}')
+# from 16777216 to 4294967294
+decimal = re.compile(r'\d{8,10}')
+
+for test in test_cases:
+    found_ips += convert_and_validate(re.findall(dot_dec, test), 10)
+    found_ips += convert_and_validate(re.findall(dot_hex, test), 16)
+    found_ips += convert_and_validate(re.findall(dot_oct, test), 8)
+    found_ips += convert_and_validate(re.findall(dot_bin, test), 2)
+    found_ips += convert_and_validate(re.findall(octal, test), 8, False)
+    found_ips += convert_and_validate(re.findall(binary, test), 2, False)
+    found_ips += convert_and_validate(re.findall(hexadecimal, test), 16, False)
+    found_ips += convert_and_validate(re.findall(decimal, test), 10, False)
+
+count = Counter(found_ips)
+maximum = count.most_common(1)[0][1]
+print ' '.join(sorted(ip for ip in count.keys() if count[ip] == maximum))
