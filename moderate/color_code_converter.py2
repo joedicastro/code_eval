@@ -78,7 +78,6 @@ RGB(207,169,196)
 
 import re
 import sys
-import colorsys
 
 
 def hsx_to_rgb(color, code):
