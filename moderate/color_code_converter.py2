@@ -1,0 +1,132 @@
+#!/usr/bin/env python2
+# encoding: utf-8
+
+"""
+Color Code Converter.
+
+Challenge Description:
+
+Your challenge is to write a program to convert different types of color codes.
+You will need to be able to convert color codes between CMYK, Hex, HSL, HSV and
+RGB. The converter should accept codes formatted as follows:
+
+HSL: "HSL(D,P,P)"
+HSV: "HSV(D,P,P)"
+CMYK: "(F,F,F,F)"
+Hex: "#000000"
+
+Where: 'D' is in range [0, 359] degrees, 'P' is in range [0, 100] percent, 'F'
+is a float, rounded to a second digit after dot in range [0.00, 1.00], Hex is
+in range [#000000, #ffffff]
+
+Input sample:
+
+Your program should accept as its first argument a path to a filename. Each
+line of the file contains a color in one of a described codes. E.g.
+
+(0.56,0.94,0.21,0.02)
+HSL(359,0,0)
+HSV(276,33,7)
+#cfa9c4
+
+Output sample:
+
+For each line of input determine the color code, convert it to RGB and print
+out the result, rounding a float numbers to a nearest whole integer. E.g.
+
+RGB(110,15,197)
+RGB(0,0,0)
+RGB(15,12,18)
+RGB(207,169,196)
+
+"""
+
+# Formulae (copied from rapidtables.com)
+#
+#   CMYK to RGB
+#   ===========
+#
+#   R = 255 × (1-C) × (1-K)
+#   G = 255 × (1-M) × (1-K)
+#   B = 255 × (1-Y) × (1-K)
+#
+#   HSL to RGB
+#   ==========
+#
+#   C = (1 - |2L - 1|) × S
+#   X = C × (1 - |(H / 60º) mod 2 - 1|)
+#   m = L - C/2
+#
+#
+#                   / (C, X, 0)  ,   0º <= H <  60º
+#                   | (X, C, 0)  ,  60º <= H < 120º
+#   (R', G', B') = <  (0, C, X)  , 120º <= H < 180º
+#                   | (0, X, C)  , 180º <= H < 240º
+#                   | (X, 0, C)  , 240º <= H < 300º
+#                   \ (C, 0, X)  , 300º <= H < 360º
+#
+#   (R,G,B) = (R'+m, G'+m, B'+m)
+#
+#   HSV to RGB
+#   ==========
+#
+#   Same as HSL, only changes the C and m calculations
+#
+#   C = V × S
+#   m = V - C
+#
+
+import re
+import sys
+import colorsys
+
+
+def hsx_to_rgb(color, code):
+    """Convert from HSL or HSV to RGB."""
+    # get the values of Hue, Saturation and Lightness or Value
+    hue, sat, lig_val = color[0], color[1] / 100, color[2] / 100
+
+    # shortcut for grays
+    if sat <= 0.0:
+        return [int(round(255 * lig_val))] * 3
+
+    chroma = (1 - abs(2 * lig_val - 1)) * sat if code == 'L' else lig_val * sat
+    x = chroma * (1 - abs(((hue / 60) % 2) - 1))
+    m = lig_val - (chroma / 2) if code == 'L' else lig_val - chroma
+
+    if hue in xrange(0, 60):
+        r, g, b = chroma, x, 0
+    elif hue in xrange(60, 120):
+        r, g, b = x, chroma, 0
+    elif hue in xrange(120, 180):
+        r, g, b = 0, chroma, x
+    elif hue in xrange(180, 240):
+        r, g, b = 0, x, chroma
+    elif hue in xrange(240, 300):
+        r, g, b = x, 0, chroma
+    elif hue in xrange(300, 360):
+        r, g, b = chroma, 0, x
+
+    return [int(round(255 * (c + m))) for c in (r, g, b)]
+
+
+cmyk_regex = re.compile(r'(\d.\d{2})')
+hsl_and_hsv_regex = re.compile(r'\d+')
+hex_regex = re.compile(r'(\w{2})')
+
+
+with open(sys.argv[1], 'r') as input:
+    test_cases = input.read().strip().splitlines()
+
+for test in test_cases:
+    if test:
+        if test.startswith('('):
+            cmyk = [float(i) for i in re.findall(cmyk_regex, test)]
+            rgb = [int(round(255 * (1 - i) * (1 - cmyk[3]))) for i in cmyk[:3]]
+        elif test.startswith('#'):
+            rgb = [int(i, 16) for i in re.findall(hex_regex, test)]
+        elif test.startswith('HS'):
+            hsx = [float(i) for i in re.findall(hsl_and_hsv_regex, test)]
+            rgb = (hsx_to_rgb(hsx, test[2]))
+
+        print "RGB({0},{1},{2})".format(rgb[0], rgb[1], rgb[2])
