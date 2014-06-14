@@ -78,7 +78,39 @@ RGB(207,169,196)
 
 import re
 import sys
-from colorsys import hls_to_rgb, hsv_to_rgb
+import colorsys
+
+
+def hsx_to_rgb(color, code):
+    """Convert from HSL or HSV to RGB."""
+    # get the values of Hue, Saturation and Lightness or Value
+    hue = color[0]
+    # There is an error in the challenge, the S and L values are swapped.
+    sat = (color[1] if code == 'V' else color[2]) / 100.0
+    lig_val = (color[1] if code == 'L' else color[2]) / 100.0
+
+    # shortcut for grays
+    if sat <= 0.0:
+        return [int(round(255 * lig_val))] * 3
+
+    chroma = (1 - abs(2 * lig_val - 1)) * sat if code == 'L' else lig_val * sat
+    x = chroma * (1 - abs(((hue / 60) % 2) - 1))
+    m = lig_val - (chroma / 2) if code == 'L' else lig_val - chroma
+
+    if hue in xrange(0, 60):
+        r, g, b = chroma, x, 0
+    elif hue in xrange(60, 120):
+        r, g, b = x, chroma, 0
+    elif hue in xrange(120, 180):
+        r, g, b = 0, chroma, x
+    elif hue in xrange(180, 240):
+        r, g, b = 0, x, chroma
+    elif hue in xrange(240, 300):
+        r, g, b = x, 0, chroma
+    elif hue in xrange(300, 360):
+        r, g, b = chroma, 0, x
+
+    return [int(round(255 * (c + m))) for c in (r, g, b)]
 
 
 cmyk_regex = re.compile(r'(\d.\d{2})')
@@ -98,17 +130,6 @@ for test in test_cases:
             rgb = [int(i, 16) for i in re.findall(hex_regex, test)]
         elif test.startswith('HS'):
             hsx = [float(i) for i in re.findall(hsl_and_hsv_regex, test)]
-            if test[2] == 'L':
-                rgb = [
-                    abs(int(round(255.0 * i)))
-                    for i in
-                    hls_to_rgb(hsx[0]/360.0, hsx[1]/100.0, hsx[2]/100.0)
-                ]
-            else:
-                rgb = [
-                    abs(int(round(255 * i)))
-                    for i in
-                    hsv_to_rgb(hsx[0]/360.0, hsx[1]/100.0, hsx[2]/100.0)
-                ]
+            rgb = (hsx_to_rgb(hsx, test[2]))
 
         print "RGB({0},{1},{2})".format(rgb[0], rgb[1], rgb[2])
