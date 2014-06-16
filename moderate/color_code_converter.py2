@@ -84,10 +84,7 @@ import colorsys
 def hsx_to_rgb(color, code):
     """Convert from HSL or HSV to RGB."""
     # get the values of Hue, Saturation and Lightness or Value
-    hue = color[0]
-    # There is an error in the challenge, the S and L values are swapped.
-    sat = (color[1] if code == 'V' else color[2]) / 100.0
-    lig_val = (color[1] if code == 'L' else color[2]) / 100.0
+    hue, sat, lig_val = color[0], color[1] / 100.0, color[2] / 100.0
 
     # shortcut for grays
     if sat <= 0.0:
