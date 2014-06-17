@@ -1,0 +1,77 @@
+#!/usr/bin/env python2
+# encoding: utf-8
+
+"""
+Minimum Path Sum.
+
+Challenge Description:
+
+You are given an n*n matrix of integers. You can move only right and down.
+Calculate the minimal path sum from the top left to the bottom right
+
+Input sample:
+
+Your program should accept as its first argument a path to a filename. The
+first line will have the value of n(the size of the square matrix). This will
+be followed by n rows of the matrix. (Integers in these rows will be comma
+delimited). After the n rows, the pattern repeats. E.g.
+
+2
+4,6
+2,8
+3
+1,2,3
+4,5,6
+7,8,9
+
+Output sample:
+
+Print out the minimum path sum for each matrix. E.g.
+
+14
+21
+
+"""
+
+import sys
+
+with open(sys.argv[1], 'r') as input:
+    test_cases = input.read().strip().splitlines()
+
+indexes = {i: int(n) for i, n in enumerate(test_cases) if ',' not in n}
+matrices = []
+
+for i in sorted(indexes.keys()):
+    matrices.append(
+        [
+            [int(j) for j in test_cases[i].split(',')]
+            for i in range(i+1, i + indexes[i] + 1)
+        ]
+    )
+
+for matrix in matrices:
+    # first, to generate the coordinates to traverse the matrix diagonally
+    # moving to the left and up, beginning at the bottom right and ending on
+    # the top left
+    diagonals = []
+
+    last_row = end = len(matrix) - 1
+
+    for diagonal in xrange(2 * end - 1, -1, -1):
+        for number in xrange(diagonal - end, end + 1):
+            diagonals.append((diagonal - number, number))
+            if number == 0:
+                end -= 1
+
+    # now, traverse the matrix adding the minimal sum from bottom right to top
+    # left
+    for row, col in diagonals:
+        if row == last_row:
+            matrix[row][col] = matrix[row][col] + matrix[row][col + 1]
+        elif col == last_row:
+            matrix[row][col] = matrix[row][col] + matrix[row + 1][col]
+        else:
+            matrix[row][col] = min(matrix[row][col] + matrix[row][col + 1],
+                                matrix[row][col] + matrix[row + 1][col])
+
+    print matrix[0][0]
