@@ -1,0 +1,60 @@
+#!/usr/bin/env python2
+# encoding: utf-8
+
+"""
+Prefix expressions.
+
+Challenge Description:
+
+You are given a prefix expression. Write a program to evaluate it.
+
+Input sample:
+
+Your program should accept as its first argument a path to a filename. The file
+contains one prefix expression per line. E.g.
+
+* + 2 3 4
+
+Your program has to read this and insert it into any data structure you like.
+Traverse that data structure and evaluate the prefix expression. Each token is
+delimited by a whitespace. You may assume that the only valid operators
+appearing in test data are '+','*' and '/'(floating-point division).
+
+Output sample:
+
+20
+
+Print to stdout, the output of the prefix expression, one per line. E.g.
+
+Constraints:
+
+The evaluation result will always be an integer >= 0.
+The number of the test cases is <= 40.
+
+"""
+
+import operator
+import sys
+
+with open(sys.argv[1], 'r') as input:
+    test_cases = input.read().strip().splitlines()
+
+
+for test in test_cases:
+    expression = test.split()
+    operators = {
+        '+': operator.add,
+        '*': operator.mul,
+        '/': operator.truediv
+    }
+
+    stack = []
+    for i in expression[::-1]:
+        if i not in operators:
+            stack.append(int(i))
+        else:
+            operand_a = stack.pop()
+            operand_b = stack.pop()
+            result = operators[i](operand_a, operand_b)
+            stack.append(result)
+    print int(round(stack.pop()))
