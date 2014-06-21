@@ -1,0 +1,124 @@
+#!/usr/bin/env python2
+# encoding: utf-8
+
+"""
+Challenge Description:
+
+Sequence 011212201220200112 ... constructed as follows: first is 0, then
+repeated the following action: already written part is attributed to the right
+with replacement 0 to 1, 1 to 2, 2 to 0. E.g.
+
+0 -> 01 -> 0112 -> 01121220 -> ...
+
+Create an algorithm which determines what number is on the N-th position in the
+sequence.
+
+Input sample:
+
+Your program should accept as its first argument a path to a filename. Each
+line in this file contains an integer N such as 0 <= N <= 3000000000. E.g.
+
+0
+5
+101
+25684
+
+Output sample:
+
+Print out the number which is on the N-th position in the sequence. E.g.
+
+0
+2
+1
+0
+
+"""
+
+# After the second iteration we have this sequence:
+#
+#   0112
+#
+# If this is divided in four parts:
+#
+#     a | b | c | d ---+---+---+--- 0 | 1 | 1 | 2
+#
+# We have now a formula that repeats ad infinitum in following iterations:
+#
+#   next sequence = previous sequence + part c + part d + part d + part a
+#
+# so,  the next iteration should be this:
+#
+#   next sequence = 0112 + 1 + 2 + 2 + 0 = 01121220
+#
+# and that's right! We have now an efficient method to create new sequences.
+#
+# But in other way, if we want to store all the digits in a string and still
+# respect the limits of the problem, we have those numbers:
+#
+#   3e9 chars * 1 Byte per char = 3 GB = 2,79 GiB
+#
+# An that's only to store the string with the sequence, we have to sum too the
+# substrings that we made temporally to grow the sequence. A mess and a waste
+# of memory! In fact, after profiling the script doing the things in this way I
+# have an almost good time performance (2.4s) but a huge memory consumption: a
+# maximum peak of 8 GBytes of memory used in the execution.
+#
+# So, let's take another strategy, divide and conquer! Let's begin to create
+# the sequence until a given length, e.g. 16384 chars (bytes) and then use the
+# previous idea with a little difference, replacing each portion with a simple
+# letter stored in a dictionary.
+#
+#        4096 bytes   4096 bytes   4096 bytes   4096 bytes
+#        |============|============|============|============| 16384 bytes
+#        0112122...
+#
+#            |            |            |            |
+#            V            V            V            V
+#
+#            A            B            C            D
+#        |============|============|============|============| 4 bytes
+#           1 bytes      1 bytes      1 bytes      1 bytes
+#
+# That's 64 times less space for the rest of the sequence, so, let's do the
+# math:
+#
+#   (3e9 chars / 4096) * 1 Byte per char = 732 KB = 715 KiB
+#
+# A very huge improvement!
+#
+# After doing this I have a memory consumption of only 8 MiB for the same input
+# and only runs for 25ms
+#
+# Of course, do that means that we have to deal with a mapping, and a
+# translation mechanism to deal with the bytes position, but is not a big deal
+# with respect to the general improvement.
+
+import sys
+
+
+with open(sys.argv[1], 'r') as input:
+    test_cases = input.read().strip().splitlines()
+
+
+def grow_seq(seq, length):
+    """Grow the sequence following the formula until a desired length."""
+    while len(seq) <= length:
+        large, step = len(seq), len(seq) / 4
+        seq += seq[step * 2:large] + seq[step * 3:large] + seq[0:step]
+    return seq
+
+size, sequence, mapped_seq = 4096, '0112', 'ABCD'
+
+# grow the initial sequence until the desired size
+sequence = grow_seq(sequence, size * 2)
+
+# define the mapping
+mapping = dict(zip((mapped_seq), map(''.join, zip(*[iter(sequence)]*size))))
+
+for test in test_cases:
+    position = int(test)
+    pos = (position / size) + 1
+
+    if pos > len(mapped_seq):
+        mapped_seq = grow_seq(mapped_seq, pos)
+    print mapping.get(mapped_seq[pos - 1])[position % size]
