@@ -1,0 +1,78 @@
+#!/usr/bin/env python2
+# encoding: utf-8
+
+"""
+Challenge Description:
+
+You are given an encoded message containing only numbers. You are also provided
+with the following mapping:
+
+A : 1
+B : 2
+C : 3
+...
+Z : 26
+
+Given an encoded message, count the number of ways it can be decoded.
+
+Input sample:
+
+Your program should accept as its first argument a path to a filename. Each
+line in this file is a test-case and contains an encoded message of numbers.
+E.g.
+
+12
+123
+
+You may assume that the test cases contain only numbers.
+
+Output sample:
+
+Print out the different number of ways it can be decoded. E.g.
+
+2
+3
+
+NOTE: 12 could be decoded as AB(1 2) or L(12). Hence the number of ways to
+decode 12 is 2.
+
+"""
+
+import itertools
+import string
+import sys
+
+
+with open(sys.argv[1], 'r') as input:
+    test_cases = input.read().strip().splitlines()
+
+
+valid_numbers = [str(i) for i in xrange(1, 27)]
+
+
+def possible_combos(lst, num=0):
+    """Get the number of possible combos of 2 or more elements from a list."""
+    for i in xrange(2, len(lst) + 1):
+        num += len(list(itertools.combinations(lst, i)))
+    return num
+
+
+for test in test_cases:
+    ways = 0 if '0' in test else 1
+    # check for valid pairs of numbers (in the range  1, 26)
+    pairs = {
+        i: test[i:i+2]
+        for i in xrange(len(test) - 1)
+        if test[i:i+2] in valid_numbers
+    }
+
+    ways += sum(1 for i in pairs.keys())
+    # let explore the possible combinations of simultaneous pairs not
+    # overlapping (all the pairs in odd (or even) positions never overlap)
+    even_pos_pairs = [i for i in pairs.keys() if i % 2 == 0]
+    odd_pos_pairs = [i for i in pairs.keys() if i % 2 != 0]
+
+    ways += possible_combos(even_pos_pairs)
+    ways += possible_combos(odd_pos_pairs)
+
+    print ways
