@@ -1,0 +1,70 @@
+#!/usr/bin/env python2
+# encoding: utf-8
+
+"""
+Roman and Arabic.
+
+Challenge Description:
+
+This question involves calculating the value of "aromatic" numbers which are a
+combination of Arabic digits and Roman numerals.
+An aromatic number is of the form A1R1A2R2 ... AnRn , where each Ai is an Arabic
+digit, and each Ri is a Roman numeral. Each pair AiRi contributes a value
+described below, and by adding or subtracting these values together we get the
+value of the entire aromatic number.
+An Arabic digit A can be 0, 1, 2, 3, 4, 5, 6, 7, 8 or 9.
+A Roman numeral R is one of the seven letters I, V, X, L, C, D, or M. Each Roman
+numeral has a base value: 1, 5, 10, 50, 500, 1000, respectively.
+The value of a pair AR is A times the base value of R. Normally, you add up the
+values of the pairs to get the overall value. However, wherever there are
+consecutive symbols ARA`R` with R` having a strictly bigger base value than R,
+the value of pair AR must be substracted from the total, instead of being added.
+For example, the number 3M1D2C has the value 3 × 1000 + 1 × 500 + 2 × 100 = 3700
+and 3X2I4X has the value 3 × 10 - 2 × 1 + 4 × 10 = 68 . Write a program that
+computes the values of aromatic numbers.
+
+Input sample:
+
+3M1D2C
+2I3I2X9V1X
+
+The input is a valid aromatic number consisting of between 2 and 20 symbols.
+Your program should accept as its first argument a path to a filename. E.g.:
+
+Output sample:
+
+3700
+-16
+
+The output is the decimal value of the given aromatic number.
+
+"""
+
+import sys
+
+with open(sys.argv[1], 'r') as input:
+    test_cases = input.read().strip().splitlines()
+
+roman_numerals = {
+    'I': 1,
+    'V': 5,
+    'X': 10,
+    'L': 50,
+    'C': 100,
+    'D': 500,
+    'M': 1000
+}
+
+for test in test_cases:
+    pairs = [test[i:i + 2] for i in xrange(0, len(test) - 1, 2)]
+    output, last_roman, last_pair_value = 0, roman_numerals[pairs[0][1]], 0
+
+    for pair in pairs:
+        arabic, roman = int(pair[0]), roman_numerals[pair[1]]
+        pair_value = arabic * roman
+        output += pair_value
+        if roman > last_roman:
+            output -= last_pair_value * 2
+        last_pair_value, last_roman = pair_value, roman
+
+    print output
