@@ -27,6 +27,7 @@ Print out the number of primes between N and M (both inclusive)
 """
 
 import sys
+import math
 
 with open(sys.argv[1], 'r') as input:
     test_cases = input.read().strip().splitlines()
@@ -61,6 +62,7 @@ def extend(lst, number):
         if is_prime(lst, i):
             lst.add(i)
 
+            
 with open(sys.argv[1], 'r') as input:
     test_cases = input.read().strip().splitlines()
 
